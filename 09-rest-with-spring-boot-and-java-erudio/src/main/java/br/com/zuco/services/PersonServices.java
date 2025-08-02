@@ -1,7 +1,9 @@
 package br.com.zuco.services;
 
-import br.com.zuco.data.dto.PersonDTO;
+import br.com.zuco.data.dto.v1.PersonDTO;
+import br.com.zuco.data.dto.v2.PersonDTOV2;
 import br.com.zuco.exception.ResourceNotFoundException;
+import br.com.zuco.mapper.custom.PersonMapper;
 import br.com.zuco.model.Person;
 import br.com.zuco.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class PersonServices {
 
     @Autowired
     PersonRepository repository;
+
+    @Autowired
+    PersonMapper converter;
 
     private final AtomicLong counter = new AtomicLong();
     private Logger logger = Logger.getLogger(PersonServices.class.getName());
@@ -39,6 +44,12 @@ public class PersonServices {
         logger.info("Creating one Person!");
         var entity = parseObject(person, Person.class);
         return parseObject(repository.save(entity), PersonDTO.class);
+    }
+
+    public PersonDTOV2 createV2(PersonDTOV2 person) {
+        logger.info("Creating one Person V2!");
+        var entity = converter.convertDTOtoEntity(person);
+        return converter.convertEntityToDTO(repository.save(entity));
     }
 
     public PersonDTO update(PersonDTO person) {

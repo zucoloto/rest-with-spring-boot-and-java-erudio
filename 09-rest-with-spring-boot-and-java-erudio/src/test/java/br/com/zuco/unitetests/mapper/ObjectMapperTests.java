@@ -1,6 +1,6 @@
 package br.com.zuco.unitetests.mapper;
 
-import br.com.zuco.data.dto.PersonDTO;
+import br.com.zuco.data.dto.v1.PersonDTO;
 import br.com.zuco.model.Person;
 import br.com.zuco.unitetests.mapper.mocks.MockPerson;
 import org.junit.jupiter.api.BeforeEach;
